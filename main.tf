@@ -48,7 +48,7 @@ resource "aws_internet_gateway" "main" {
 }
 
 resource "aws_eip" "nat" {
-  count = length(local.public_cidr)
+  count = length(local.public_cidr)                                                                     
 
   vpc = true
 
@@ -56,6 +56,9 @@ resource "aws_eip" "nat" {
     Name = "nat${count.index}"
   }
 }
+
+
+
 
 resource "aws_nat_gateway" "main" {
   count = length(local.public_cidr)
