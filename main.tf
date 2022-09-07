@@ -3,7 +3,7 @@ resource "aws_vpc" "main" {
 
   tags = {
     Name = var.env_code
-  }
+  }6
 
 }
 
@@ -43,8 +43,8 @@ resource "aws_internet_gateway" "main" {
 }
 
 resource "aws_eip" "nat" {
-                                                                   
-  count = length(var.public_cidr)                                                                     
+
+  count = length(var.public_cidr)
 
   vpc = true
 
@@ -77,8 +77,6 @@ resource "aws_route_table" "public" {
   tags = {
     Name = "${var.env_code}-public"
   }
-
-}
 
 resource "aws_route_table" "private" {
   count = length(var.private_cidr)
