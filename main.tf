@@ -3,7 +3,7 @@ resource "aws_vpc" "main" {
 
   tags = {
     Name = var.env_code
-  }6
+  }
 
 }
 
@@ -77,6 +77,8 @@ resource "aws_route_table" "public" {
   tags = {
     Name = "${var.env_code}-public"
   }
+
+}
 
 resource "aws_route_table" "private" {
   count = length(var.private_cidr)
