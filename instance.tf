@@ -21,7 +21,7 @@ resource "aws_security_group" "public" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["98.56.189.252/32"]
+    cidr_blocks = ["${var.my_public_ip}/32"]
 
   }
 
@@ -43,7 +43,7 @@ resource "aws_instance" "private" {
   instance_type          = "t3.micro"
   key_name               = "main"
   vpc_security_group_ids = [aws_security_group.private.id]
-  subnet_id              = aws_subnet.private[0].id
+  subnet_id              = aws_subnet.private[1].id
 
   tags = {
     Name = "${var.env_code}-private"
@@ -52,11 +52,11 @@ resource "aws_instance" "private" {
 
 resource "aws_security_group" "private" {
   name        = "${var.env_code}-private"
-  description = "Allow inbound traffic"
+  description = "Allow VPC traffic"
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    description = "SSH from public"
+    description = "SSH from VPC"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
