@@ -44,15 +44,15 @@ resource "aws_security_group" "public" {
 
   }
 
-   ingress {
+  ingress {
     description = "HTTP from public"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["${var.my_public_ip}/32"]
-}
+  }
 
-egress {
+  egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
