@@ -11,7 +11,6 @@ terraform {
     key    = "terraform.tfstate"
     region = "us-west-2"
     dynamodb_table = "terraform-remote-state"
-
   }
 
 }
