@@ -6,4 +6,3 @@ data "terraform_remote_state" "level1" {
     region = "us-west-2"
   }
 }
-    
