@@ -4,7 +4,6 @@ resource "aws_vpc" "main" {
   tags = {
     Name = var.env_code
   }
-
 }
 
 resource "aws_subnet" "public" {
@@ -16,8 +15,6 @@ resource "aws_subnet" "public" {
   tags = {
     Name = "${var.env_code}-public${count.index}"
   }
-
-
 }
 
 resource "aws_subnet" "private" {
@@ -29,7 +26,6 @@ resource "aws_subnet" "private" {
   tags = {
     Name = "${var.env_code}-private${count.index}"
   }
-
 }
 
 resource "aws_internet_gateway" "main" {
@@ -38,8 +34,6 @@ resource "aws_internet_gateway" "main" {
   tags = {
     Name = var.env_code
   }
-
-
 }
 
 resource "aws_eip" "nat" {
@@ -53,7 +47,6 @@ resource "aws_eip" "nat" {
   }
 }
 
-
 resource "aws_nat_gateway" "main" {
   count = length(var.public_cidr)
 
@@ -63,7 +56,6 @@ resource "aws_nat_gateway" "main" {
   tags = {
     Name = "${var.env_code}-main${count.index}"
   }
-
 }
 
 resource "aws_route_table" "public" {
@@ -77,7 +69,6 @@ resource "aws_route_table" "public" {
   tags = {
     Name = "${var.env_code}-public"
   }
-
 }
 
 resource "aws_route_table" "private" {
@@ -93,7 +84,6 @@ resource "aws_route_table" "private" {
   tags = {
     Name = "${var.env_code}${count.index}"
   }
-
 }
 
 resource "aws_route_table_association" "public" {
@@ -101,7 +91,6 @@ resource "aws_route_table_association" "public" {
 
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
-
 }
 
 resource "aws_route_table_association" "private" {
@@ -109,6 +98,4 @@ resource "aws_route_table_association" "private" {
 
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private[count.index].id
-
 }
-  
