@@ -23,8 +23,6 @@ resource "aws_instance" "public" {
   vpc_security_group_ids      = [aws_security_group.public.id]
   subnet_id                   = data.terraform_remote_state.level1.outputs.public_subnet_id[1]
 
-  user_data = file("user-data.sh")
-
   tags = {
     Name = "${var.env_code}-public"
   }
@@ -72,6 +70,8 @@ resource "aws_instance" "private" {
   vpc_security_group_ids = [aws_security_group.private.id]
   subnet_id              = data.terraform_remote_state.level1.outputs.private_subnet_id[1]
 
+  user_data = file("user-data.sh")
+
   tags = {
     Name = "${var.env_code}-private"
   }
@@ -89,6 +89,14 @@ resource "aws_security_group" "private" {
     protocol    = "tcp"
     cidr_blocks = [data.terraform_remote_state.level1.outputs.vpc_cidr]
 
+  }
+
+  ingress {
+    description     = "HTTP from load balancer"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.load_balancer.id]
   }
 
   egress {
