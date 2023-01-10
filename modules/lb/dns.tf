@@ -8,6 +8,5 @@ resource "aws_route53_record" "www" {
   type    = "CNAME"
   ttl     = "300"
   records = [aws_lb.main.dns_name]
-
 }
   
