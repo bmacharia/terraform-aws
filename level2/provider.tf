@@ -9,13 +9,13 @@ terraform {
   backend "s3" {
     bucket         = "terraform-remote-state-babuki"
     key            = "level2.tfstate"
-    region         = "us-west-2"
+    region         = "us-east-1"
     dynamodb_table = "terraform-remote-state"
   }
 }
 
 provider "aws" {
-  region                   = "us-west-2"
+  region                   = "us-east-1"
   shared_credentials_files = ["~/.aws/credentials"]
   profile                  = "terraform-user"
 }
